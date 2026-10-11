@@ -1,0 +1,28 @@
+{
+  "name": "energy-network-innovation-map",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config vite.map.config.ts --host 127.0.0.1",
+    "build": "tsc -b && vite build --config vite.map.config.ts",
+    "build:map": "tsc -b && vite build --config vite.map.config.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "cytoscape": "3.33.1",
+    "lucide-react": "0.468.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.5",
+    "@types/cytoscape": "3.31.0",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "@vitejs/plugin-react": "4.4.1",
+    "tailwindcss": "4.1.5",
+    "typescript": "5.8.3",
+    "vite": "6.3.5"
+  }
+}

@@ -1,0 +1,15 @@
+data/
+outputs/
+.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+frontend/node_modules
+frontend/dist/
+frontend/map-dist/
+*.tsbuildinfo
+.DS_Store
+docs/map-build-*.json
+
+frontend/.map-build-*

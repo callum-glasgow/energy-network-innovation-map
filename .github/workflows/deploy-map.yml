@@ -1,0 +1,57 @@
+name: Deploy prepared project map
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Existing map- Release tag to deploy (also supports rollback)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: project-map-pages
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.release.tag_name, 'map-')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    env:
+      RELEASE_TAG: ${{ github.event.release.tag_name || inputs.release_tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check out the source matching this release
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.release_tag }}
+      - name: Download the prepared map
+        run: gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern energy-network-map.zip --dir release
+      - name: Verify and extract the exact release package
+        run: python3 -m scripts.map_release release/energy-network-map.zip public-map --source-root .
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public-map
+  deploy:
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
