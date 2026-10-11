@@ -103,6 +103,8 @@ Publishing a `map-…` Release triggers [the Pages workflow](.github/workflows/d
 
 ## Checks and hosting
 
+The [publication verification report](docs/publication-verification.json) records the successful Pages deployment and anonymous ZIP download on 11 October 2026. Checks passed for 44 Python tests, 18 frontend tests, all initial hosted files and the corrected release files. Browser checks covered the graph, project table, original evidence, comparisons, management view and fullscreen. Publication made no paid model calls.
+
 ```sh
 .venv/bin/python -m unittest discover -s tests
 cd frontend

@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-11T21:56:31.421764+00:00",
+  "url": "https://callum-glasgow.github.io/energy-network-innovation-map/",
+  "entries": 312,
+  "release_tag": "map-cd27acccef8a834e",
+  "source_commit": "da0f078a30178685de60b192a69e851059b285c0",
+  "archive_sha256": "cd27acccef8a834ed68261df02225ef070e1385c80bc5f1f56ba390e22a49b78",
+  "actions_run": "https://github.com/callum-glasgow/energy-network-innovation-map/actions/runs/38178270401",
+  "actions_conclusion": "success",
+  "anonymous_download_verified": true,
+  "package_checksums_verified": 661,
+  "initial_deployment_public_files_checked": 660,
+  "final_deployment_changed_files_checked": [
+    "README.txt",
+    "assets/GraphCanvas-B0ljBFhX.js",
+    "assets/index-P6fYbB-4.js",
+    "build-info.json",
+    "index.html",
+    "snapshot-info.json"
+  ],
+  "final_hosted_checksums_match_release": true,
+  "project_detail_files": 312,
+  "comparison_row_files": 312,
+  "python_tests_passed": 44,
+  "frontend_tests_passed": 18,
+  "browser_checks": [
+    "catalogue loads without login",
+    "graph canvas has 312 projects",
+    "investment/group defaults",
+    "zoom-out limited at overview",
+    "project table and selected details below",
+    "saved comparisons and original evidence",
+    "management view",
+    "fullscreen covers 1280x720 browser viewport",
+    "Escape exits fullscreen",
+    "downloaded package runs with standard-library Python only"
+  ],
+  "paid_model_calls_during_publication": 0,
+  "all_3200_entries_performance_tested": false
+}
