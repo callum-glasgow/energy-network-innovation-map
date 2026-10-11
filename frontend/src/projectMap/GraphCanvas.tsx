@@ -18,16 +18,14 @@ function focusProject(graph:Core,id:string){
 type Props={source:MapSource;data:GraphData;layout:Drawing;linkKey:string;focusRequest:FocusRequest|null;lens:Lens;measure:Measure;equalSize:boolean;compressed:boolean;colour:string;statusColours:Record<string,string>;groupColours:Record<number,string>;visible:Set<string>;selected:string;view:string;showLinks:boolean;showLineage:boolean;onSelect:(id:string)=>void};
 export default function GraphCanvas(p:Props){
   const container=useRef<HTMLDivElement>(null),cy=useRef<Core|null>(null),callback=useRef(p.onSelect);
-  const shell=useRef<HTMLDivElement>(null),fullscreenButton=useRef<HTMLButtonElement>(null);
+  const fullscreenButton=useRef<HTMLButtonElement>(null);
   const[fullscreen,setFullscreen]=useState(false);
   const[hover,setHover]=useState<ProjectNode|null>(null),[zoom,setZoom]=useState(1),[minimumZoom,setMinimumZoom]=useState(0);
   const[hoverScores,setHoverScores]=useState<{id:string;revision:string;lens:Lens;matches:Match[]}|null>(null);
   callback.current=id=>{
     setHover(null);
     if(!fullscreen){p.onSelect(id);return}
-    const finish=()=>{setFullscreen(false);requestAnimationFrame(()=>p.onSelect(id))};
-    if(document.fullscreenElement===shell.current)void document.exitFullscreen().catch(()=>{}).finally(finish);
-    else finish();
+    setFullscreen(false);requestAnimationFrame(()=>p.onSelect(id));
   };
   const nodesRef=useRef(p.data.nodes);nodesRef.current=p.data.nodes;
   const focusRef=useRef(p.focusRequest);focusRef.current=p.focusRequest;
@@ -54,20 +52,16 @@ export default function GraphCanvas(p:Props){
     const previousFocus=document.activeElement as HTMLElement|null,previousOverflow=document.body.style.overflow;
     document.body.style.overflow='hidden';fullscreenButton.current?.focus();
     const escape=(event:KeyboardEvent)=>{if(event.key==='Escape')setFullscreen(false)};
-    const changed=()=>{if(document.fullscreenElement!==shell.current)setFullscreen(false)};
-    document.addEventListener('keydown',escape);document.addEventListener('fullscreenchange',changed);
+    document.addEventListener('keydown',escape);
     return()=>{
       document.body.style.overflow=previousOverflow;
-      document.removeEventListener('keydown',escape);document.removeEventListener('fullscreenchange',changed);
-      if(document.fullscreenElement===shell.current)void document.exitFullscreen().catch(()=>{});
+      document.removeEventListener('keydown',escape);
       previousFocus?.focus();
     };
   },[fullscreen]);
   function toggleFullscreen(){
-    if(fullscreen){setFullscreen(false);return}
-    setFullscreen(true);
-    // Embedded browsers may deny native fullscreen; the viewport-sized view still works.
-    if(shell.current?.requestFullscreen)void shell.current.requestFullscreen().catch(()=>{});
+    // Fill the browser viewport without depending on native fullscreen permission.
+    setFullscreen(value=>!value);
   }
   useEffect(()=>{
     if(!container.current)return;
@@ -135,7 +129,7 @@ export default function GraphCanvas(p:Props){
   useEffect(()=>{if(p.view==='lineage'&&cy.current&&p.visible.size){setMinimumZoom(limitToVisibleProjects(cy.current,true))}},[p.view,p.visible]);
   function fit(){const graph=cy.current;if(graph)setMinimumZoom(limitToVisibleProjects(graph,true))}
   function scale(factor:number){const graph=cy.current;if(graph)graph.zoom({level:Math.min(4,Math.max(graph.minZoom(),graph.zoom()*factor)),renderedPosition:{x:graph.width()/2,y:graph.height()/2}})}
-  return <div ref={shell} className={`map-canvas-shell${fullscreen?' is-fullscreen':''}`}>
+  return <div className={`map-canvas-shell${fullscreen?' is-fullscreen':''}`}>
     <div ref={container} className="map-canvas" role="img" aria-label={`${p.visible.size} project bubbles. Diamond = source says Live; circle = Complete; square = other or unrecorded status. Use the matching project table for keyboard navigation.`}/>
     {!p.visible.size&&<div className="map-empty"><strong>No projects in this view</strong><span>Clear a filter or choose Portfolio to see all matching projects.</span></div>}
     <div className="map-zoom"><button aria-label="Zoom in" onClick={()=>scale(1.4)}><Plus size={17}/></button><button aria-label="Zoom out" disabled={zoom<=minimumZoom+1e-6} title="Zoom out to show all visible projects" onClick={()=>scale(1/1.4)}><Minus size={17}/></button><button aria-label="Fit visible projects" onClick={fit}><Maximize2 size={17}/></button><button ref={fullscreenButton} aria-label={fullscreen?'Exit full screen map':'Full screen map'} title={fullscreen?'Exit full screen (Esc)':'Full screen map'} aria-pressed={fullscreen} onClick={toggleFullscreen}>{fullscreen?<Minimize size={17}/>:<Maximize size={17}/>}</button></div>

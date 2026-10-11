@@ -4,14 +4,14 @@
 
 A portfolio map for innovation project managers and management teams at energy networks. Explore technical similarity, recorded project history, original project evidence, dates and investment totals. This repository contains the **standalone map and its maintenance tools**. It does not contain the separate search/report application.
 
-The first release covers **312 SP Energy Networks projects: 222 Distribution and 90 Transmission**. The tools support adding other owners and approximately 3,200 entries; that expanded catalogue is not included in this release. This is a saved snapshot, not a live ENA feed. A later ENA download found 313 SPEN projects, but the extra entry has not yet been indexed or included here.
+The first release covers **312 SP Energy Networks projects: 222 Distribution and 90 Transmission**. The tools support adding other owners and approximately 3,200 entries; that expanded catalogue is not included in this release. This is a saved snapshot, not a live ENA feed. At initial publication, a newer ENA download had found 313 SPEN projects; the extra entry was not included in that first snapshot.
 
 ## When is the data from?
 
-Project descriptions and metadata were checked on **7 October 2026**. Financial fields were checked on **10 October 2026**. Building or publishing the map later does not refresh these records. Live/Complete reflects the recorded source status; an expired end date alone does not establish completion. Individual projects retain their source/check dates where recorded.
+For the initial release, project descriptions and metadata were checked on **7 October 2026**, and financial fields on **10 October 2026**. The generated table below gives the dates for the latest prepared package. Building or publishing the map later does not refresh these records. Live/Complete reflects the recorded source status; an expired end date alone does not establish completion. Individual projects retain their source/check dates where recorded.
 
 <!-- snapshot-start -->
-Snapshot: **312 projects**. Package built **2026-10-11T21:29:45.300314+00:00**.
+Snapshot: **312 projects**. Package built **2026-10-11T21:52:47.775447+00:00**.
 
 | Source timestamp | Earliest → latest (UTC) | Records with date |
 | --- | --- | --- |
